@@ -227,7 +227,7 @@ window.onload = () => {
             console.error('Error al cargar marcas:', error);
         });
 
-    // Aplicar y quitar la clase "rojo" en la sección de seguros
+    //Aplicar y quitar la clase azul en la seccion de seguros
     let insuranceSection = document.querySelector("#insurance-section");
 
     insuranceSection.addEventListener("mouseenter", () => {
