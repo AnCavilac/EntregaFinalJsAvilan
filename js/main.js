@@ -101,12 +101,8 @@ window.onload = () => {
             localStorage.setItem("usuarios", JSON.stringify(usuarios.map(user => ({
                 nombre: user.nombre,
                 total: user.total
-            }
-        )
-    )
-)
-);
-
+            }))));
+    
             //Actualizar el combobox con el nuevo usuario
             const selectUsuario = document.getElementById("select-usuario");
             const option = document.createElement("option");
@@ -145,27 +141,23 @@ window.onload = () => {
             document.getElementById("insurance-section").style.display = "block";
             
             // Uso de toastify
-            Toastify(
-                {
-                    text:"Te has loggeado éxitosamente",
-                    duration: 3000,
-                    gravity: "top",
-                    position:"right"
-                }
-            ).showToast();
+            Toastify({
+                text:"Te has loggeado éxitosamente",
+                duration: 3000,
+                gravity: "top",
+                position:"right"
+            }).showToast();
 
         } else {
             errorMessage.innerText = "Usuario no encontrado. Intenta nuevamente.";
             errorMessage.style.color = "red";
 
-            Toastify(
-                {
-                    text:"Te has loggeado incorrectamente",
-                    duration: 3000,
-                    gravity: "top",
-                    position:"right"
-                }
-            ).showToast();
+            Toastify({
+                text:"Te has loggeado incorrectamente",
+                duration: 3000,
+                gravity: "top",
+                position:"right"
+            }).showToast();
         }
     };
 
@@ -206,7 +198,8 @@ window.onload = () => {
             comprasDiv.innerHTML = ""; 
             compras.forEach(compra => {
                 const p = document.createElement("p");
-                p.textContent = `${compra.nombre} compró un seguro de ${compra.tipoSeguro} de la marca ${compra.marca} por $${compra.total}`;                comprasDiv.appendChild(p);
+                p.textContent = `${compra.nombre} compró un seguro de ${compra.tipoSeguro} de la marca ${compra.marca} por $${compra.total}`;                
+                comprasDiv.appendChild(p);
             });
         }
     };
@@ -218,19 +211,30 @@ window.onload = () => {
         document.getElementById("nombre-usuario").style.display = "block";
     }
 
- //Cargar las marcas
-fetch('/marcas.json') 
-    .then(res => res.json())
-    .then(data => {
-        const selectMarca = document.getElementById('select-marca');
-        data.marcas.forEach(marca => {
-            const option = document.createElement('option');
-            option.value = marca;
-            option.textContent = marca;
-            selectMarca.appendChild(option);
+    //Cargar las marcas
+    fetch('/marcas.json') 
+        .then(res => res.json())
+        .then(data => {
+            const selectMarca = document.getElementById('select-marca');
+            data.marcas.forEach(marca => {
+                const option = document.createElement('option');
+                option.value = marca;
+                option.textContent = marca;
+                selectMarca.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar marcas:', error);
         });
-})
-.catch(error => {
-    console.error('Error al cargar marcas:', error);
-});
+
+    // Aplicar y quitar la clase "rojo" en la sección de seguros
+    let insuranceSection = document.querySelector("#insurance-section");
+
+    insuranceSection.addEventListener("mouseenter", () => {
+        insuranceSection.classList.add("azul");
+
+        setTimeout(() => {
+            insuranceSection.classList.remove("azul");
+        }, Math.floor(Math.random() * 5000 + 1000));
+    });
 };
