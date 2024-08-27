@@ -212,7 +212,7 @@ window.onload = () => {
     }
 
     //Cargar las marcas
-    fetch('/marcas.json') 
+    fetch('./marcas.json') 
         .then(res => res.json())
         .then(data => {
             const selectMarca = document.getElementById('select-marca');
